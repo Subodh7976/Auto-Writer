@@ -1,5 +1,6 @@
 from textSummarizer.config.configuration import ConfigurationManager
 from textSummarizer.components.data_ingestion import DataIngestion
+from textSummarizer.components.data_validation import DataValidation
 from textSummarizer.logging import logger 
 
 
@@ -23,6 +24,10 @@ class TrainingPipeline:
             self.__data_ingestion()
             logger.info("STAGE -- Data Ingestion completed ---")
             
+            logger.info("STAGE --- data validation started ---")
+            self.__data_validation()
+            logger.info("STAGE --- data validation completed ---")
+            
         except Exception as e:
             logger.exception(e)
             raise e 
@@ -37,3 +42,12 @@ class TrainingPipeline:
         data_ingestion.download_data()
         data_ingestion.extract_zip_data()
         
+    def __data_validation(self):
+        '''
+        initiates the data validation task under the training pipeline
+        '''
+        data_validation_config = self.config.get_data_validation_config()
+        data_validation = DataValidation(config=data_validation_config)
+        data_validation.validate_all_files()
+
+    
