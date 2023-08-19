@@ -1,6 +1,9 @@
 transformers
 transformers[sentencepiece]
+transformers[torch]
 datasets
+gdown
+pickle
 sacrebleu
 rouge_score
 py7zr
