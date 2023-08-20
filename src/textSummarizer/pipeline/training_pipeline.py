@@ -3,6 +3,7 @@ from textSummarizer.components.data_ingestion import DataIngestion
 from textSummarizer.components.data_validation import DataValidation
 from textSummarizer.components.data_transformation import DataTransformation
 from textSummarizer.components.model_trainer import ModelTrainer
+from textSummarizer.components.model_evaluation import ModelEvaluation
 from textSummarizer.logging import logger 
 
 
@@ -37,6 +38,10 @@ class TrainingPipeline:
             logger.info("STAGE --- Model Trainer started ---")
             self.model_trainer()
             logger.info("STAGE --- Model Trainer completed ---")
+            
+            logger.info("STAGE --- Model Evaluation started ---")
+            self.model_evaluation()
+            logger.info("STAGE --- Model Evaluation completed ---")
             
         except Exception as e:
             logger.exception(e)
@@ -75,4 +80,12 @@ class TrainingPipeline:
         model_trainer_config = self.config.get_model_trainer_config()
         model_trainer = ModelTrainer(config=model_trainer_config)
         model_trainer.train()
+    
+    def model_evaluation(self):
+        '''
+        initiates the model evaluation task under the training pipeline
+        '''
+        model_evaluation_config = self.config.get_model_evaluation_config()
+        model_evaluation = ModelEvaluation(config=model_evaluation_config)
+        model_evaluation.evaluate()
     

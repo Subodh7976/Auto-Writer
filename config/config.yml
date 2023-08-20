@@ -29,3 +29,11 @@ model_trainer:
   model_ckpt: t5-base
   model_pickle: artifacts/model_trainer/model
   tokenize_pickle: artifacts/model_trainer/tokenizer
+
+
+model_evaluation:
+  root_dir: artifacts/model_evaluation
+  data_path: artifacts/data_ingestion/data/test.csv
+  model_path: artifacts/model_trainer/model_t5
+  tokenizer_path: artifacts/model_trainer/tokenizer_t5
+  metric_file_name: artifacts/model_evaluation/metrics.csv
