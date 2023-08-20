@@ -37,3 +37,8 @@ model_evaluation:
   model_path: artifacts/model_trainer/model_t5
   tokenizer_path: artifacts/model_trainer/tokenizer_t5
   metric_file_name: artifacts/model_evaluation/metrics.csv
+
+
+prediction:
+  model_path: artifacts/model_trainer/model
+  tokenizer_path: artifacts/model_trainer/tokenizer

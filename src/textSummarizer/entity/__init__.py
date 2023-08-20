@@ -54,3 +54,9 @@ class ModelEvaluationConfig:
     tokenizer_path: Path 
     metric_file_name: Path 
     
+
+@dataclass(frozen=True)
+class PredictionConfig:
+    model_path: Path 
+    tokenizer_path: Path 
+    
