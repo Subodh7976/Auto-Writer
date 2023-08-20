@@ -2,7 +2,7 @@ artifacts_root: artifacts
 
 data_ingestion:
   root_dir: artifacts/data_ingestion
-  source_URL: https://drive.google.com/uc?id=183Q4dQHRHc6YuIiYrquREdrAgxQGGqAU
+  source_url: https://drive.google.com/uc?id=183Q4dQHRHc6YuIiYrquREdrAgxQGGqAU
   local_data_file: artifacts/data_ingestion/data.zip
   unzip_dir: artifacts/data_ingestion
 
@@ -28,7 +28,7 @@ model_trainer:
   val_data_path: artifacts/data_transformation/dataset_validation
   model_ckpt: t5-base
   model_pickle: artifacts/model_trainer/model
-  tokenize_pickle: artifacts/model_trainer/tokenizer
+  tokenizer_pickle: artifacts/model_trainer/tokenizer
 
 
 model_evaluation:
@@ -36,6 +36,8 @@ model_evaluation:
   data_path: artifacts/data_ingestion/data/test.csv
   model_path: artifacts/model_trainer/model_t5
   tokenizer_path: artifacts/model_trainer/tokenizer_t5
+  model_pkl: artifacts/model_trainer/model
+  tokenizer_pkl: artifacts/model_trainer/tokenizer
   metric_file_name: artifacts/model_evaluation/metrics.csv
 
 

@@ -8,6 +8,7 @@ from textSummarizer.entity import (
     ModelEvaluationConfig,
     PredictionConfig
 )
+from pathlib import Path
 
 
 class ConfigurationManager:
@@ -96,6 +97,7 @@ class ConfigurationManager:
             ModelTrainerConfig: the configuration for model trainer
         '''
         config = self.config.model_trainer
+        params = self.params.train_arguments
         
         create_directories([config.root_dir])
         
@@ -106,15 +108,15 @@ class ConfigurationManager:
             model_ckpt=config.model_ckpt,
             model_pickle=config.model_pickle,
             tokenizer_pickle=config.tokenizer_pickle,
-            num_train_epochs=config.num_train_epochs,
-            warmup_steps=config.warmup_steps,
-            per_device_train_batch_size=config.per_device_train_batch_size,
-            weight_decay=config.weight_decay,
-            logging_steps=config.logging_steps,
-            evaluation_strategy=config.evaluation_strategy,
-            eval_steps=config.eval_steps,
-            save_steps=config.save_steps,
-            gradient_accumulation_steps=config.gradient_accumulation_steps
+            num_train_epochs=params.num_train_epochs,
+            warmup_steps=params.warmup_steps,
+            per_device_train_batch_size=params.per_device_train_batch_size,
+            weight_decay=params.weight_decay,
+            logging_steps=params.logging_steps,
+            evaluation_strategy=params.evaluation_strategy,
+            eval_steps=params.eval_steps,
+            save_steps=params.save_steps,
+            gradient_accumulation_steps=params.gradient_accumulation_steps
         )
         
         return model_trainer_config
@@ -136,6 +138,8 @@ class ConfigurationManager:
             data_path=config.data_path,
             model_path=config.model_path,
             tokenizer_path=config.tokenizer_path,
+            model_pkl=Path(config.model_pkl),
+            tokenizer_pkl=Path(config.tokenizer_pkl),
             metric_file_name=config.metric_file_name
         )
         

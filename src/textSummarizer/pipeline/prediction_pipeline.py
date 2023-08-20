@@ -1,5 +1,6 @@
 from textSummarizer.config.configuration import ConfigurationManager
 from textSummarizer.logging import logger
+from textSummarizer.utils.common import load_object
 
 import pickle
 import torch 
@@ -52,11 +53,7 @@ class PredictionPipeline:
         '''
         loads the model and tokenizer if available
         '''
-        if os.path.exists(self.config.model_path):
-            with open(self.config.model_path, 'rb') as model_file:
-                self.model = pickle.load(model_file)
+        self.model = load_object(self.config.model_path)
         
-        if os.path.exists(self.config.tokenizer_path):
-            with open(self.config.tokenizer_path, 'rb') as tokenizer_file:
-                self.tokenizer = pickle.load(tokenizer_file)
+        self.tokenizer = load_object(self.config.tokenizer_path)
     

@@ -4,6 +4,7 @@ transformers[torch]
 datasets
 gdown
 pickle
+flask
 sacrebleu
 rouge_score
 py7zr

@@ -1,4 +1,4 @@
-from textSummarizer.logging import logger 
+from textSummarizer.pipeline.training_pipeline import TrainingPipeline
 
-
-logger.info("Welcome to our custom logging")
+train_pipe = TrainingPipeline()
+train_pipe.train()

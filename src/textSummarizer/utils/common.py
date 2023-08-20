@@ -5,7 +5,7 @@ from textSummarizer.logging import logger
 from ensure import ensure_annotations
 from box import ConfigBox
 from pathlib import Path 
-from typing import Any 
+import pickle
 
 
 
@@ -28,7 +28,7 @@ def read_yaml(path_to_yaml: Path) ->ConfigBox:
     try: 
         with open(path_to_yaml) as yaml_file:
             content = yaml.safe_load(yaml_file)
-            logger.info(f"Yamle file: {path_to_yaml} loaded succesfully")
+            logger.info(f"Yaml file: {path_to_yaml} loaded successfully")
             return ConfigBox(content)
     except BoxValueError:
         raise ValueError("yaml file is empty")
@@ -64,4 +64,20 @@ def get_size(path: Path) -> str:
     return f"~ {size_in_kb} KB"
 
 
+@ensure_annotations
+def load_object(path: Path):
+    '''
+    loads the object stored in the path using pickle
+    
+    args:
+        path: Path - path of the object
+    returns:
+        Any: the loaded object
+    '''
+    if os.path.exists(path):
+        with open(path, 'rb') as file:
+            obj = pickle.load(file)
+        
+        return obj 
+    return None 
     

@@ -5,6 +5,7 @@ import pandas as pd
 from tqdm import tqdm
 
 from textSummarizer.config.configuration import ModelEvaluationConfig
+from textSummarizer.utils.common import load_object
 
 
 class ModelEvaluation:
@@ -46,17 +47,17 @@ class ModelEvaluation:
             column_text: str - the feature in the dataset to be used as input
             column_summary: str - the feature in the dataset to be used as target
         '''
-        article_batches = list(self.generate_batch_sized_chunks(dataset[column_text], batch_size))
-        target_batches = list(self.generate_batch_sized_chunks(dataset[column_summary], batch_size))
+        article_batches = list(self.generate_batch_sized_chunks(dataset[column_text].tolist(), batch_size))
+        target_batches = list(self.generate_batch_sized_chunks(dataset[column_summary].tolist(), batch_size))
         
         for article_batch, target_batch in tqdm(
-            zip(article_batch, target_batch), total=len(article_batches)
+            zip(article_batches, target_batches), total=len(article_batches)
         ):
             inputs = tokenizer(article_batch, max_length=1024, truncation=True,
                                padding="max_length", return_tensors='pt')
             summaries = model.generate(input_ids=inputs['input_ids'].to(device),
                                        attention_mask=inputs['attention_mask'].to(device),
-                                       length_penalty=0.8, num_beans=8, max_length=128)
+                                       length_penalty=0.8, num_beams=8, max_length=128)
             
             decoded_summaries = [tokenizer.decode(s, skip_special_tokens=True,
                                                   clean_up_tokenization_spaces=True) for s in summaries]
@@ -72,14 +73,18 @@ class ModelEvaluation:
         saves metric to csv
         '''
         device = "cuda" if torch.cuda.is_available() else "cpu"
-        tokenizer = AutoTokenizer.from_pretrained(self.config.tokenizer_path)
-        model = AutoModelForSeq2SeqLM.from_pretrained(self.config.model_path).to(device)
+        # tokenizer = AutoTokenizer.from_pretrained(self.config.tokenizer_path)
+        # model = AutoModelForSeq2SeqLM.from_pretrained(self.config.model_path).to(device)
+        
+        model = load_object(self.config.model_pkl).to(device)
+        tokenizer = load_object(self.config.tokenizer_pkl)
+        
         
         dataset_test = pd.read_csv(self.config.data_path)
         
         rouge_names = ["rouge1", "rouge2", "rougeL", "rougeLsum"]
         
-        rouge_metric = load_metric('rogue')
+        rouge_metric = load_metric('rouge')
         
         score = self.calculate_metric_on_test_ds(
             dataset_test[0:10], rouge_metric, model, tokenizer, 
