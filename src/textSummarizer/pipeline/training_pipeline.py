@@ -1,6 +1,7 @@
 from textSummarizer.config.configuration import ConfigurationManager
 from textSummarizer.components.data_ingestion import DataIngestion
 from textSummarizer.components.data_validation import DataValidation
+from textSummarizer.components.data_transformation import DataTransformation
 from textSummarizer.logging import logger 
 
 
@@ -21,19 +22,23 @@ class TrainingPipeline:
         '''
         try:
             logger.info("STAGE --- Data Ingestion started ---")
-            self.__data_ingestion()
+            self.data_ingestion()
             logger.info("STAGE -- Data Ingestion completed ---")
             
             logger.info("STAGE --- data validation started ---")
-            self.__data_validation()
+            self.data_validation()
             logger.info("STAGE --- data validation completed ---")
+            
+            logger.info("STAGE --- data transformation started ---")
+            self.data_transformation()
+            logger.info("STAGE --- data transformation completed ---")
             
         except Exception as e:
             logger.exception(e)
             raise e 
         
         
-    def __data_ingestion(self):
+    def data_ingestion(self):
         '''
         initiates the data ingestion task under the training pipeline
         '''
@@ -42,7 +47,7 @@ class TrainingPipeline:
         data_ingestion.download_data()
         data_ingestion.extract_zip_data()
         
-    def __data_validation(self):
+    def data_validation(self):
         '''
         initiates the data validation task under the training pipeline
         '''
@@ -50,4 +55,11 @@ class TrainingPipeline:
         data_validation = DataValidation(config=data_validation_config)
         data_validation.validate_all_files()
 
+    def data_transformation(self):
+        '''
+        initiates the data transformation task under the training pipeline
+        '''
+        data_transformation_config = self.config.get_data_transformation_config()
+        data_transformation = DataTransformation(config=data_transformation_config)
+        data_transformation.convert()
     

@@ -12,3 +12,9 @@ data_validation:
   STATUS_FILE: artifacts/data_validation/status.txt
   ALL_REQUIRED_FILES: ["train.csv", "test.csv", "validation.csv"]
   data_path: artifacts/data_ingestion/data
+
+
+data_transformation:
+  root_dir: artifacts/data_transformation
+  data_path: artifacts/data_ingestion/data
+  tokenizer_name: t5-base
