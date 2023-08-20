@@ -59,9 +59,9 @@ class DataTransformation:
         
         dataset = Dataset.from_pandas(df.sample(150000))
         dataset_pt = dataset.map(self.convert_examples_to_features, batched=True)
-        dataset_pt.save_to_disk(os.path.join(self.config.root_dir, "dataset_train"))
+        dataset_pt.save_to_disk(self.config.train_dataset)
         
         dataset_val = Dataset.from_pandas(df_val)
         dataset_val_pt = dataset_val.map(self.convert_examples_to_features, batched=True)
-        dataset_val_pt.save_to_disk(os.path.join(self.config.root_dir, "dataset_validation"))
+        dataset_val_pt.save_to_disk(self.config.val_dataset)
         

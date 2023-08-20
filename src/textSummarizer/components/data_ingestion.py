@@ -14,7 +14,7 @@ class DataIngestion:
         create an instance for Data Ingestion class
         
         params:
-            config: DataIngestionConfig = configuration of data ingestion
+            config: DataIngestionConfig - configuration of data ingestion
         '''
         self.config = config
         

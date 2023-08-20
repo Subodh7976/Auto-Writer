@@ -3,7 +3,8 @@ from textSummarizer.utils.common import read_yaml, create_directories
 from textSummarizer.entity import (
     DataIngestionConfig,
     DataValidationConfig,
-    DataTransformationConfig
+    DataTransformationConfig,
+    ModelTrainerConfig
 )
 
 
@@ -78,8 +79,41 @@ class ConfigurationManager:
         data_transformation_config = DataTransformationConfig(
             root_dir=config.root_dir,
             data_path=config.data_path,
+            train_dataset=config.train_dataset,
+            val_dataset=config.val_dataset,
             tokenizer_name=config.tokenizer_name 
         )
         
         return data_transformation_config
+    
+    def get_model_trainer_config(self) -> ModelTrainerConfig:
+        '''
+        creates and returns model trainer configuration
+        
+        returns:
+            ModelTrainerConfig: the configuration for model trainer
+        '''
+        config = self.config.model_trainer
+        
+        create_directories([config.root_dir])
+        
+        model_trainer_config = ModelTrainerConfig(
+            root_dir=config.root_dir,
+            train_data_path=config.train_data_path,
+            val_data_path=config.val_data_path,
+            model_ckpt=config.model_ckpt,
+            model_pickle=config.model_pickle,
+            tokenizer_pickle=config.tokenizer_pickle,
+            num_train_epochs=config.num_train_epochs,
+            warmup_steps=config.warmup_steps,
+            per_device_train_batch_size=config.per_device_train_batch_size,
+            weight_decay=config.weight_decay,
+            logging_steps=config.logging_steps,
+            evaluation_strategy=config.evaluation_strategy,
+            eval_steps=config.eval_steps,
+            save_steps=config.save_steps,
+            gradient_accumulation_steps=config.gradient_accumulation_steps
+        )
+        
+        return model_trainer_config
     

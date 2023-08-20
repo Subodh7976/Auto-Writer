@@ -2,6 +2,7 @@ from textSummarizer.config.configuration import ConfigurationManager
 from textSummarizer.components.data_ingestion import DataIngestion
 from textSummarizer.components.data_validation import DataValidation
 from textSummarizer.components.data_transformation import DataTransformation
+from textSummarizer.components.model_trainer import ModelTrainer
 from textSummarizer.logging import logger 
 
 
@@ -33,6 +34,10 @@ class TrainingPipeline:
             self.data_transformation()
             logger.info("STAGE --- data transformation completed ---")
             
+            logger.info("STAGE --- Model Trainer started ---")
+            self.model_trainer()
+            logger.info("STAGE --- Model Trainer completed ---")
+            
         except Exception as e:
             logger.exception(e)
             raise e 
@@ -62,4 +67,12 @@ class TrainingPipeline:
         data_transformation_config = self.config.get_data_transformation_config()
         data_transformation = DataTransformation(config=data_transformation_config)
         data_transformation.convert()
+    
+    def model_trainer(self):
+        '''
+        initiates the model training task under the training pipeline
+        '''
+        model_trainer_config = self.config.get_model_trainer_config()
+        model_trainer = ModelTrainer(config=model_trainer_config)
+        model_trainer.train()
     
