@@ -8,6 +8,7 @@ flask
 sacrebleu
 rouge_score
 py7zr
+python-decouple
 pandas
 nltk
 tqdm

@@ -1,7 +1,7 @@
 import os
 from box.exceptions import BoxValueError
 import yaml
-from textSummarizer.logging import logger 
+from logger import logger 
 from ensure import ensure_annotations
 from box import ConfigBox
 from pathlib import Path 
@@ -81,3 +81,21 @@ def load_object(path: Path):
         return obj 
     return None 
     
+    
+@ensure_annotations
+def check_model_exist(path: Path):
+    '''
+    check if the model save file exist or it needs to be trained
+    
+    params: 
+        path: Path - path where the object is supposed to be saved
+    returns:
+        True if model is saved else False: bool
+    '''
+    try:
+        if os.path.isfile(path):
+            return True 
+        return False 
+    except Exception as e:
+        logger.exception(e)
+        raise e 

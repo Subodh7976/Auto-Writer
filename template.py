@@ -4,20 +4,36 @@ import logging
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s]: %(message)s:')
 
-project_name = "textSummarizer"
+summarizer = "textSummarizer"
+generator = "textGenerator"
+scraper = "webScraper"
 
 list_of_files = [
     ".github/workflows/.gitkeep",
-    f"src/{project_name}/__init__.py",
-    f"src/{project_name}/components/__init__.py",
-    f"src/{project_name}/utils/__init__.py",
-    f"src/{project_name}/utils/common.py",
-    f"src/{project_name}/logging/__init__.py",
-    f"src/{project_name}/config/__init__.py",
-    f"src/{project_name}/config/configuration.py",
-    f"src/{project_name}/pipeline/__init__.py",
-    f"src/{project_name}/entity/__init__.py",
-    f"src/{project_name}/constants/__init__.py",
+    f"src/{summarizer}/__init__.py",
+    f"src/{summarizer}/components/__init__.py",
+    f"src/{generator}/__init__.py",
+    f"src/{generator}/components/__init__.py",
+    f"src/{scraper}/__init__.py",
+    f"src/{scraper}/components/__init__.py",
+    "src/utils/__init__.py",
+    "src/utils/common.py",
+    "src/logger/__init__.py",
+    f"src/{summarizer}/config/__init__.py",
+    f"src/{summarizer}/config/configuration.py",
+    f"src/{summarizer}/pipeline/__init__.py",
+    f"src/{summarizer}/entity/__init__.py",
+    f"src/{summarizer}/constants/__init__.py",
+    f"src/{scraper}/config/__init__.py",
+    f"src/{scraper}/config/configuration.py",
+    f"src/{scraper}/pipeline/__init__.py",
+    f"src/{scraper}/entity/__init__.py",
+    f"src/{scraper}/constants/__init__.py",
+    f"src/{generator}/config/__init__.py",
+    f"src/{generator}/config/configuration.py",
+    f"src/{generator}/pipeline/__init__.py",
+    f"src/{generator}/entity/__init__.py",
+    f"src/{generator}/constants/__init__.py",
     "config/config.yaml",
     "params.yaml",
     "app.py",
@@ -25,7 +41,9 @@ list_of_files = [
     "Dockerfile",
     "requirements.txt",
     "setup.py",
-    "research/trials.ipynb"
+    "research/trials.ipynb",
+    "templates/generate.html",
+    "templates/index.html"
 ]
 
 

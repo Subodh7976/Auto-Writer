@@ -1,5 +1,5 @@
 from textSummarizer.constants import *
-from textSummarizer.utils.common import read_yaml, create_directories
+from utils.common import read_yaml, create_directories
 from textSummarizer.entity import (
     DataIngestionConfig,
     DataValidationConfig,
@@ -24,7 +24,9 @@ class ConfigurationManager:
             params_filepath: str = parameters yaml file path
         '''
         self.config = read_yaml(config_filepath)
+        self.config = self.config.text_summarizer
         self.params = read_yaml(params_filepath)
+        self.params = self.params.text_summarizer
         
         create_directories([self.config.artifacts_root])
         

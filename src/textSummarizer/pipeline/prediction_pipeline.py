@@ -1,7 +1,8 @@
 from textSummarizer.config.configuration import ConfigurationManager
-from textSummarizer.logging import logger
-from textSummarizer.utils.common import load_object
+from logger import logger
+from utils.common import load_object
 
+from pathlib import Path 
 import pickle
 import torch 
 import os 
@@ -10,7 +11,7 @@ import os
 class PredictionPipeline:
     def __init__(self):
         '''
-        initiates teh prediction pipeline by loading in the model and tokenizer
+        initiates the prediction pipeline by loading in the model and tokenizer
         '''
         self.config = ConfigurationManager().get_prediction_config()
         self.model = None  
@@ -53,7 +54,7 @@ class PredictionPipeline:
         '''
         loads the model and tokenizer if available
         '''
-        self.model = load_object(self.config.model_path)
+        self.model = load_object(Path(self.config.model_path))
         
-        self.tokenizer = load_object(self.config.tokenizer_path)
+        self.tokenizer = load_object(Path(self.config.tokenizer_path))
     

@@ -3,8 +3,8 @@ import gdown
 from zipfile import ZipFile 
 from pathlib import Path
 
-from textSummarizer.logging import logger 
-from textSummarizer.utils.common import get_size, create_directories
+from logger import logger 
+from utils.common import get_size, create_directories
 from textSummarizer.config.configuration import DataIngestionConfig
 
 

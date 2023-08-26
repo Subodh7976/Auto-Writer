@@ -1,10 +1,22 @@
-train_arguments:
-  num_train_epochs: 1
-  warmup_steps: 500
-  per_device_train_batch_size: 1
-  weight_decay: 0.01
-  logging_steps: 10
-  evaluation_strategy: steps
-  eval_steps: 500
-  save_steps: 10000
-  gradient_accumulation_steps: 16
+text_summarizer:
+  train_arguments:
+    num_train_epochs: 1
+    warmup_steps: 500
+    per_device_train_batch_size: 1
+    weight_decay: 0.01
+    logging_steps: 10
+    evaluation_strategy: steps
+    eval_steps: 500
+    save_steps: 10000
+    gradient_accumulation_steps: 16
+
+text_generator:
+  train_arguments:
+    output_hidden_states: False
+    overwrite_output_dir: True 
+    evaluation_strategy: "no" 
+    save_strategy: "no" 
+    compute_metrics: None 
+    preprocess_logits_for_metrics: None 
+    resume_from_checkpoint: None 
+    

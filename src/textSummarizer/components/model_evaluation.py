@@ -5,7 +5,7 @@ import pandas as pd
 from tqdm import tqdm
 
 from textSummarizer.config.configuration import ModelEvaluationConfig
-from textSummarizer.utils.common import load_object
+from utils.common import load_object
 
 
 class ModelEvaluation:

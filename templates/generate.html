@@ -1,0 +1,37 @@
+{% if sum_exist == True and gen_exist == True %}
+    <p>Both the models are ready.</p>
+    <br>
+    <form action="{{ url_for('generate') }}" method="post">
+        <br>
+        <input type="text" name="num" id="num" required />
+        <br>
+        <input type="submit" value="Generate">
+    </form>
+
+        {% if completed == True %}
+            <p> Time taken in generation {{time_taken}} </p>
+
+        {% endif %}
+
+{% elif sum_exist == True %}
+    <p>Only summarizer is ready. </p>
+    <br>
+
+        {% if completed == True %}
+            <p> Time taken in generation {{time_taken}} </p>
+
+            
+        {% endif %}
+
+{% elif gen_exist == True %}
+    <p>Only generator is ready. </p>
+        <br>
+        
+
+        {% if completed == True %}
+            <p> Time taken in generation {{time_taken}} </p>
+
+        {% endif %}
+{% else %}
+    <p>Neither model is ready.</p>
+{% endif %}

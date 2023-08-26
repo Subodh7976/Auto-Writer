@@ -1,46 +1,94 @@
-artifacts_root: artifacts
+text_summarizer:
+  artifacts_root: artifacts/text_summarizer
 
-data_ingestion:
-  root_dir: artifacts/data_ingestion
-  source_url: https://drive.google.com/uc?id=183Q4dQHRHc6YuIiYrquREdrAgxQGGqAU
-  local_data_file: artifacts/data_ingestion/data.zip
-  unzip_dir: artifacts/data_ingestion
-
-
-data_validation:
-  root_dir: artifacts/data_validation
-  STATUS_FILE: artifacts/data_validation/status.txt
-  ALL_REQUIRED_FILES: ["train.csv", "test.csv", "validation.csv"]
-  data_path: artifacts/data_ingestion/data
+  data_ingestion:
+    root_dir: artifacts/text_summarizer/data_ingestion
+    source_url: https://drive.google.com/uc?id=183Q4dQHRHc6YuIiYrquREdrAgxQGGqAU
+    local_data_file: artifacts/text_summarizer/data_ingestion/data.zip
+    unzip_dir: artifacts/text_summarizer/data_ingestion
 
 
-data_transformation:
-  root_dir: artifacts/data_transformation
-  data_path: artifacts/data_ingestion/data
-  train_dataset: artifacts/data_transformation/dataset_train
-  val_dataset: artifacts/data_transformation/dataset_validation
-  tokenizer_name: t5-base
+  data_validation:
+    root_dir: artifacts/text_summarizer/data_validation
+    STATUS_FILE: artifacts/text_summarizer/data_validation/status.txt
+    ALL_REQUIRED_FILES: ["train.csv", "test.csv", "validation.csv"]
+    data_path: artifacts/text_summarizer/data_ingestion/data
 
 
-model_trainer:
-  root_dir: artifacts/model_trainer
-  train_data_path: artifacts/data_transformation/dataset_train
-  val_data_path: artifacts/data_transformation/dataset_validation
-  model_ckpt: t5-base
-  model_pickle: artifacts/model_trainer/model
-  tokenizer_pickle: artifacts/model_trainer/tokenizer
+  data_transformation:
+    root_dir: artifacts/text_summarizer/data_transformation
+    data_path: artifacts/text_summarizer/data_ingestion/data
+    train_dataset: artifacts/text_summarizer/data_transformation/dataset_train
+    val_dataset: artifacts/text_summarizer/data_transformation/dataset_validation
+    tokenizer_name: t5-base
 
 
-model_evaluation:
-  root_dir: artifacts/model_evaluation
-  data_path: artifacts/data_ingestion/data/test.csv
-  model_path: artifacts/model_trainer/model_t5
-  tokenizer_path: artifacts/model_trainer/tokenizer_t5
-  model_pkl: artifacts/model_trainer/model
-  tokenizer_pkl: artifacts/model_trainer/tokenizer
-  metric_file_name: artifacts/model_evaluation/metrics.csv
+  model_trainer:
+    root_dir: artifacts/text_summarizer/model_trainer
+    train_data_path: artifacts/text_summarizer/data_transformation/dataset_train
+    val_data_path: artifacts/text_summarizer/data_transformation/dataset_validation
+    model_ckpt: t5-base
+    model_pickle: artifacts/text_summarizer/model_trainer/model
+    tokenizer_pickle: artifacts/text_summarizer/model_trainer/tokenizer
 
 
-prediction:
-  model_path: artifacts/model_trainer/model
-  tokenizer_path: artifacts/model_trainer/tokenizer
+  model_evaluation:
+    root_dir: artifacts/text_summarizer/model_evaluation
+    data_path: artifacts/text_summarizer/data_ingestion/data/test.csv
+    model_path: artifacts/text_summarizer/model_trainer/model_t5
+    tokenizer_path: artifacts/text_summarizer/model_trainer/tokenizer_t5
+    model_pkl: artifacts/text_summarizer/model_trainer/model
+    tokenizer_pkl: artifacts/text_summarizer/model_trainer/tokenizer
+    metric_file_name: artifacts/text_summarizer/model_evaluation/metrics.csv
+
+
+  prediction:
+    model_path: artifacts/text_summarizer/model_trainer/model
+    tokenizer_path: artifacts/text_summarizer/model_trainer/tokenizer
+
+
+text_generator:
+  artifacts_root: artifacts/text_generator
+
+  data_ingestion:
+    root_dir: artifacts/text_generator/data_ingestion
+    source_url: https://drive.google.com/uc?id=1Nmu_Mq1tycGt9KUKvzsQTGoEr7007I96
+    local_data_file: artifacts/text_generator/data_ingestion/data.csv
+    
+  data_validation:
+    root_dir: artifacts/text_generator/data_validation
+    status_file: artifacts/text_generator/data_validation/status.txt
+    required_file: artifacts/text_generator/data_ingestion/data.csv
+
+  data_transformation:
+    root_dir: artifacts/text_generator/data_transformation
+    local_data_path: artifacts/text_generator/data_ingestion/data.csv
+    save_data_path: artifacts/text_generator/data_transformation/dataset
+    tokenizer_name: gpt2
+    block_size: 512
+
+  model_trainer:
+    root_dir: artifacts/text_generator/model_trainer
+    data_path: artifacts/text_generator/data_transformation/dataset
+    model_name: gpt2
+    output_dir: artifacts/text_generator/model_trainer/model_gpt2
+
+  prediction:
+    model_path: artifacts/text_generator/model_trainer/model_gpt2
+    model_name: gpt2
+
+web_scraper:
+  artifacts_root: artifacts/web_scraper
+
+  trends_scraper:
+    root_dir: artifacts/web_scraper/trends_scraper
+    record_path: artifacts/web_scraper/trends_scraper/records.json
+    request_url: https://trends.google.com/trends/trendingsearches/daily/rss?geo=IN
+
+  google_searcher:
+    root_dir: artifacts/web_scraper/google_searcher
+    record_path: artifacts/web_scraper/google_searcher/records
+  
+  article_scraper:
+    root_dir: artifacts/web_scraper/article_scraper
+    record_path: artifacts/web_scraper/article_scraper/records
